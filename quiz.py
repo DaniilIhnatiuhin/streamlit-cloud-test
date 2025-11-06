@@ -56,7 +56,7 @@ with tab1:
             st.error(f"Twój wynik: {score} / {len(questions)}")
 
 with tab2:
-    col1, col2, col3 = st.columns([4, 2, 2])
+    col1, col2, col3 = st.columns([3, 2, 2])
     with col1:
         with st.container():
             st.header("Statystyki")
@@ -64,7 +64,7 @@ with tab2:
             with col11:
                 st.metric("Pytania: ", len(questions))
             with col12:    
-                st.metric("Próg: ", (len(questions)/2)/len(questions) * 100)
+                st.metric("Próg w %: ", (len(questions)/2)/len(questions) * 100)
             with col13:
                 st.metric("Wynik: ", f"{int(len(questions)*0.5)} pkt")
     with col2:
