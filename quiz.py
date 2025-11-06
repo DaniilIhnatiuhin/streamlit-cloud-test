@@ -54,7 +54,8 @@ with tab1:
 with tab2:
     col1, col2, col3 = st.columns(3)
     with col1:
-    
+        st.header("Kolumna 1")
+        st.button("Przycisk 1")
     with col2:
         st.header("Kolumna 2")
         st.button("Przycisk 2")
