@@ -2,6 +2,8 @@ import streamlit as st
 
 st.title("Mini Quiz")
 
+tab1, tab2 = st.tabs(["Quiz", "Kolumny"])
+
 questions = [
     {
         "question": "Jak robi pjes?",
@@ -27,34 +29,34 @@ questions = [
 
 user_answers = []
 score = 0
+with tab1:
+    with st.form("quiz_form"):
+        for i, q in enumerate(questions):
+            user_choice = st.radio(f"{i+1}. {q['question']}", q["options"], key=i, index=None)
+            user_answers.append(user_choice)
+        submitted = st.form_submit_button("Sprawdź wynik")
 
-with st.form("quiz_form"):
-    for i, q in enumerate(questions):
-        user_choice = st.radio(f"{i+1}. {q['question']}", q["options"], key=i, index=None)
-        user_answers.append(user_choice)
-    submitted = st.form_submit_button("Sprawdź wynik")
+    if submitted:
+        for i, q in enumerate(questions):
+            if user_answers[i] is None:
+                st.error(f"Nie zaznaczono odpowiedzi w pytaniu {i+1}.")
+                continue
+            if q["options"].index(user_answers[i]) == q["answer"]:
+                score += 1
 
-if submitted:
-    for i, q in enumerate(questions):
-        if user_answers[i] is None:
-            st.error(f"Nie zaznaczono odpowiedzi w pytaniu {i+1}.")
-            continue
-        if q["options"].index(user_answers[i]) == q["answer"]:
-            score += 1
+        if score/len(questions) >= 0.5:
+            st.success(f"Twój wynik: {score} / {len(questions)}")
+        else:
+            st.error(f"Twój wynik: {score} / {len(questions)}")
 
-    if score/len(questions) >= 0.5:
-        st.success(f"Twój wynik: {score} / {len(questions)}")
-    else:
-        st.error(f"Twój wynik: {score} / {len(questions)}")
-
-
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.header("Kolumna 1")
-    st.button("Przycisk 1")
-with col2:
-    st.header("Kolumna 2")
-    st.button("Przycisk 2")
-with col3:
-    st.header("Kolumna 3")
-    st.button("Przycisk 3")
+with tab2:
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.header("Kolumna 1")
+        st.button("Przycisk 1")
+    with col2:
+        st.header("Kolumna 2")
+        st.button("Przycisk 2")
+    with col3:
+        st.header("Kolumna 3")
+        st.button("Przycisk 3")
