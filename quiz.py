@@ -39,7 +39,7 @@ with tab1:
             user_choice = st.radio(f"{i+1}. {q['question']}", q["options"], key=i, index=None)
             user_answers.append(user_choice)
             with st.expander("Podpowiedź:"):
-                st.page_link(q['hint'], label=f"podpowiedź do pytania {i}")
+                st.page_link(q['hint'], label=f"podpowiedź do pytania {i+1}")
         submitted = st.form_submit_button("Sprawdź wynik")
 
     if submitted:
@@ -58,23 +58,18 @@ with tab1:
 with tab2:
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.header("Kolumna 1")
-        st.button("Przycisk 1")
+        st.header("Statystyki")
+        st.metric("Liczba pytań", len(questions))
+        st.metric("Wymagany wynik", f"{int(len(questions)*0.5)} pkt")
     with col2:
-        st.header("Kolumna 2")
-        st.button("Przycisk 2")
+        st.header("Ciekawostka")
+        if st.button("Pokaż ciekawostkę"):
+            st.info("Tlen to najczęściej występujący pierwiastek w ludzkim ciele.")
     with col3:
-        st.header("Kolumna 3")
-        st.button("Przycisk 3")
+        st.header("Linki edukacyjne")
+        st.page_link("https://pl.wikipedia.org/wiki/Pierwiastek_chemiczny", label="Pierwiastki chemiczne")
+        st.page_link("https://www.matemaks.pl", label="Matematyka z Matemaks")
+
 
 with st.expander("Rozwiń, aby zobaczyć kod źródłowy"):
     st.page_link("https://github.com/Mikku0/streamlit-cloud-test/blob/master/quiz.py", label="kod na githubie")
-
-st.sidebar.title("Panel boczny")
-selected_option = st.sidebar.selectbox("Wybierz opcję",["Strona główna", "Analiza danych", "Wizualizacje"])
-if selected_option == "Strona główna":
-    st.write("Witamy na stronie głównej")
-elif selected_option == "Analiza danych":
-    st.write("Sekcja analizy danych")
-else:
-    st.write("Sekcja wizualizacji")
