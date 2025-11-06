@@ -60,3 +60,6 @@ with tab2:
     with col3:
         st.header("Kolumna 3")
         st.button("Przycisk 3")
+
+with st.expander("Rozwiń, aby zobaczyć kod źródłowy"):
+    st.page_link("https://github.com/Mikku0/streamlit-cloud-test/blob/master/quiz.py", label="kod na githubie")
