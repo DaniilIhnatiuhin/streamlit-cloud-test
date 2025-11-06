@@ -8,22 +8,26 @@ questions = [
     {
         "question": "Jak robi pjes?",
         "options": ["Hau", "Miau", "Beee", "Muuu"],
-        "answer": 0
+        "answer": 0,
+        "hint": "https://pl.wikipedia.org/wiki/Pies_domowy"
     },
     {
         "question": "Ile wynosi pierwiastek kwadratowy z 64?",
         "options": ["6", "7", "8", "9"],
-        "answer": 2
+        "answer": 2,
+        "hint": "https://www.matemaks.pl/pierwiastek-kwadratowy.html"
     },
     {
         "question": "Który pierwiastek chemiczny ma symbol 'O'?",
         "options": ["Złoto", "Tlen", "Sód", "Wodór"],
-        "answer": 1
+        "answer": 1,
+        "hint": "https://www.oke.gda.pl/plikiOKE/Egzamin_eksternistyczny/Informatory/Liceum/2007_11_07_lo_tablice_chemiczne.pdf"
     },
     {
         "question": "ile dni trwa rok?",
         "options": ["24", "350", "7", "365"],
-        "answer": 3
+        "answer": 3,
+        "hint": "https://www.kalendarzswiat.pl/kalendarz/2025"
     }
 ]
 
@@ -35,7 +39,7 @@ with tab1:
             user_choice = st.radio(f"{i+1}. {q['question']}", q["options"], key=i, index=None)
             user_answers.append(user_choice)
             with st.expander("Podpowiedź:"):
-                st.page_link("https://pl.wikipedia.org/wiki/Pies_domowy", label="podpowiedź do pytania 1")
+                st.page_link(q['hint'], label=f"podpowiedź do pytania {i}")
         submitted = st.form_submit_button("Sprawdź wynik")
 
     if submitted:
