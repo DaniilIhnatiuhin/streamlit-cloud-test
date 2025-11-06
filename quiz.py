@@ -60,13 +60,13 @@ with tab2:
     with col1:
         with st.container():
             st.header("Statystyki")
-            col11, col12, col13 = st.columns([2, 1, 1])
+            col11, col12, col13 = st.columns([4, 2, 2])
             with col11:
-                st.metric("Liczba pytań: ", len(questions))
+                st.metric("Pytania: ", len(questions))
             with col12:    
-                st.metric("Wymagane % do zaliczenia: ", (len(questions)/2)/len(questions) * 100)
+                st.metric("Próg: ", (len(questions)/2)/len(questions) * 100)
             with col13:
-                st.metric("Wymagany wynik: ", f"{int(len(questions)*0.5)} pkt")
+                st.metric("Wynik: ", f"{int(len(questions)*0.5)} pkt")
     with col2:
         st.header("Poziom trudności:")
         st.write("Niski")
