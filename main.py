@@ -129,13 +129,26 @@ with tab2:
     
     if use_builtin:
         df_map = load_data()
-        if df_map is None:
-            st.error("Nie można wczytać pliku housing.csv")
+    if df_map is None:
+        st.error("Nie można wczytać pliku housing.csv")
     elif uploaded_file is not None:
         try:
             df_map = pd.read_csv(uploaded_file)
         except Exception as e:
             st.error(f"Error loading file: {str(e)}")
+    elif manual_input:
+        st.subheader("Manual Data Entry")
+        num_points = st.number_input("Ile punktów chcesz dodać?", min_value=1, max_value=20, value=3)
+
+        manual_data = []
+        for i in range(num_points):
+            st.markdown(f"**Punkt {i+1}**")
+            lon = st.number_input(f"Longitude {i+1}", value=-120.0, key=f"lon_{i}")
+            lat = st.number_input(f"Latitude {i+1}", value=35.0, key=f"lat_{i}")
+            price = st.number_input(f"Price {i+1}", value=200000.0, key=f"price_{i}")
+            manual_data.append({"longitude": lon, "latitude": lat, "price": price})
+
+        df_map = pd.DataFrame(manual_data)
 
     if df_map is not None:
         try:
