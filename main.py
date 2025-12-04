@@ -130,8 +130,8 @@ with tab2:
     
     if use_builtin:
         df_map = load_data()
-    if df_map is None:
-        st.error("Nie można wczytać pliku housing.csv")
+        if df_map is None:
+            st.error("Nie można wczytać pliku housing.csv")
     elif uploaded_file is not None:
         try:
             df_map = pd.read_csv(uploaded_file)
@@ -139,19 +139,55 @@ with tab2:
             st.error(f"Error loading file: {str(e)}")
     elif manual_input:
         st.subheader("Manual Data Entry")
-        num_points = st.number_input("Ile punktów chcesz dodać?", min_value=1, max_value=20, value=3)
+        num_points = st.number_input("Ile punktów chcesz dodać?", min_value=1, max_value=20, value=1)
 
         manual_data = []
         for i in range(num_points):
             st.markdown(f"**Punkt {i+1}**")
             lon = st.number_input(f"Longitude {i+1}", value=-120.0, key=f"lon_{i}")
             lat = st.number_input(f"Latitude {i+1}", value=35.0, key=f"lat_{i}")
-            price = st.number_input(f"Price {i+1}", value=200000.0, key=f"price_{i}")
-            manual_data.append({"longitude": lon, "latitude": lat, "price": price})
+            housing_median_age = st.number_input(f"Housing Median Age {i+1}", value=20.0, key=f"age_{i}")
+            total_rooms = st.number_input(f"Total Rooms {i+1}", value=1000.0, key=f"rooms_{i}")
+            total_bedrooms = st.number_input(f"Total Bedrooms {i+1}", value=200.0, key=f"bedrooms_{i}")
+            population = st.number_input(f"Population {i+1}", value=500.0, key=f"pop_{i}")
+            households = st.number_input(f"Households {i+1}", value=150.0, key=f"households_{i}")
+            median_income = st.number_input(f"Median Income {i+1}", value=3.0, key=f"income_{i}")
+            
+            # Placeholder predykcji – średnia cena z datasetu lub stała wartość
+            placeholder_price = 200000.0
+            manual_data.append({
+                "longitude": lon,
+                "latitude": lat,
+                "housing_median_age": housing_median_age,
+                "total_rooms": total_rooms,
+                "total_bedrooms": total_bedrooms,
+                "population": population,
+                "households": households,
+                "median_income": median_income,
+                "predicted_price": placeholder_price
+            })
 
         df_map = pd.DataFrame(manual_data)
 
-    if df_map is not None:
+        # Pokazanie przewidywanej ceny (placeholder)
+        st.success(f"Przewidywana cena domu (placeholder): **${placeholder_price:,.0f}**")
+
+        # Wizualizacja punktu na mapie
+        fig_pred = px.scatter_mapbox(
+            df_map,
+            lat="latitude",
+            lon="longitude",
+            color="predicted_price",
+            size_max=15,
+            zoom=6,
+            mapbox_style="open-street-map",
+            title="Predykcja ceny domu (placeholder)",
+            hover_data=df_map.columns
+        )
+        st.plotly_chart(fig_pred, use_container_width=True)
+
+    # --- Jeśli dane pochodzą z pliku lub wbudowanego datasetu ---
+    if df_map is not None and not manual_input:
         try:
             st.success(f"Successfully loaded dataset with {df_map.shape[0]} rows and {df_map.shape[1]} columns.")
             
@@ -199,7 +235,6 @@ with tab2:
                 st.subheader("Filters")
                 available_filters = [col for col in df_map.columns if col not in [longitude_col, latitude_col, price_col]]
                 
-                # Allow user to select which columns to use for filtering
                 selected_filters = st.multiselect(
                     "Select columns to use for filtering:",
                     options=available_filters,
@@ -231,10 +266,7 @@ with tab2:
                             key=f"filter_{col}_multi"
                         )
                         if len(selected_vals) != len(unique_vals):
-                            active_filters[col] = selected_vals
-                
-                # Apply filters
-                filtered_df = df_map.copy()
+                            active_filters[col] = 
                 for col, filter_val in active_filters.items():
                     if isinstance(filter_val, tuple):  # Numeric range
                         filtered_df = filtered_df[
