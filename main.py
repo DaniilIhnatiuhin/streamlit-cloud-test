@@ -13,6 +13,14 @@ st.set_page_config(
     layout="wide"
 )
 
+st.write("Current Working Directory:", os.getcwd())
+st.write("Files in CWD:", os.listdir("."))
+if os.path.exists("model"):
+    st.write("✅ 'model' folder found!")
+    st.write("Contents of 'model':", os.listdir("model"))
+else:
+    st.error("❌ 'model' folder NOT found in the repository.")
+
 # --- CACHE MODEL ---
 if "autogluon_predictor" not in st.session_state:
     with st.spinner("Loading ML Model..."):
