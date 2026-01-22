@@ -200,8 +200,8 @@ with tab2:
             st.markdown(f"**Punkt {i+1}**")
             col1, col2 = st.columns(2)
             with col1:
-                lon = st.slider(f"Longitude {i+1}", min_value=-180, max_value=180, value=-120.0, step=0.1, key=f"lon_{i}", help="Kalifornia: -124.5 do -114.0")
-                lat = st.slider(f"Latitude {i+1}", min_value=-90, max_value=90, value=37.0, step=0.1, key=f"lat_{i}", help="Kalifornia: 32.5 do 42.0")
+                lon = st.slider(f"Longitude {i+1}", min_value=-180.0, max_value=180.0, value=-120.0, step=0.1, key=f"lon_{i}", help="Kalifornia: -124.5 do -114.0")
+                lat = st.slider(f"Latitude {i+1}", min_value=-90.0, max_value=90.0, value=37.0, step=0.1, key=f"lat_{i}", help="Kalifornia: 32.5 do 42.0")
                 housing_median_age = st.number_input(f"Housing Median Age {i+1}", value=20.0, key=f"age_{i}")
                 total_rooms = st.number_input(f"Total Rooms {i+1}", value=1000.0, key=f"rooms_{i}")
             with col2:
