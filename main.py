@@ -24,11 +24,13 @@ else:
 # --- CACHE MODEL ---
 if "autogluon_predictor" not in st.session_state:
     with st.spinner("Loading ML Model..."):
-        if os.path.exists(MODEL_PATH):
+        if os.path.exists("model"):
             try:
-                st.session_state["autogluon_predictor"] = TabularPredictor.load(MODEL_PATH)
+                st.session_state["autogluon_predictor"] = TabularPredictor.load("model")
+                st.success("✅ Model loaded successfully!")
             except Exception as e:
-                st.error(f"Error loading model: {e}")
+                # THIS WILL SHOW THE REAL ERROR IF VERSIONS MISMATCH
+                st.error(f"❌ Error loading model: {e}")
                 st.session_state["autogluon_predictor"] = None
         else:
             st.session_state["autogluon_predictor"] = None
