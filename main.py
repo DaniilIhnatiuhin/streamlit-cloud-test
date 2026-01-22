@@ -26,7 +26,7 @@ if "autogluon_predictor" not in st.session_state:
     with st.spinner("Loading ML Model..."):
         if os.path.exists("model"):
             try:
-                st.session_state["autogluon_predictor"] = TabularPredictor.load("model")
+                st.session_state["autogluon_predictor"] = TabularPredictor.load(MODEL_PATH,require_py_version_match=False)
                 st.success("✅ Model loaded successfully!")
             except Exception as e:
                 # THIS WILL SHOW THE REAL ERROR IF VERSIONS MISMATCH
