@@ -14,8 +14,7 @@ st.set_page_config(
 )
 
 # --- CACHE MODEL ---
-def load_pretrained_model():
-    if "autogluon_predictor" not in st.session_state:
+if "autogluon_predictor" not in st.session_state:
     with st.spinner("Loading ML Model..."):
         if os.path.exists(MODEL_PATH):
             try:
@@ -157,7 +156,7 @@ with tab2:
         )
 
     df_map = None
-    predictor = load_pretrained_model()
+    predictor = get_model()
     
     if data_source == "builtin":
         df_map = load_data()
